@@ -16,17 +16,23 @@ namespace RGN.Tests
             RGNCoreBuilder.Dispose();
         }
 
-        public async Task SetupEnvironment(IDependencies dependencies, List<IRGNModule> modules)
+        public async Task SetupEnvironmentAsync(IDependencies dependencies, List<IRGNModule> modules)
         {
             foreach (IRGNModule module in modules)
             {
                 RGNCoreBuilder.AddModule(module);
             }
 
-            await RGNCoreBuilder.Build(dependencies);
+            await RGNCoreBuilder.BuildAsync(dependencies);
 
             TaskCompletionSource<bool> waitFirstAuthChange = new TaskCompletionSource<bool>();
             RGNCoreBuilder.I.OnAuthenticationChanged += OnAuthenticationChanged;
+
+#pragma warning disable CS4014
+            Task.Delay(5000).ContinueWith(task => {
+#pragma warning restore CS4014
+                waitFirstAuthChange.TrySetCanceled();
+            });
 
             await waitFirstAuthChange.Task;
 
@@ -34,11 +40,11 @@ namespace RGN.Tests
 
             void OnAuthenticationChanged(EnumLoginState loginState, EnumLoginError error)
             {
-                waitFirstAuthChange.SetResult(true);
+                waitFirstAuthChange.TrySetResult(true);
             }
         }
 
-        public async Task SetupTestAccount(bool isAdmin)
+        public async Task SetupTestAccountAsync(bool isAdmin)
         {
             string email = isAdmin ? "READY_RUNTIME_TESTS_ADMIN_USER_EMAIL" : "READY_RUNTIME_TESTS_NORMAL_USER_EMAIL";
             string pass = isAdmin ? "READY_RUNTIME_TESTS_ADMIN_USER_PASS" : "READY_RUNTIME_TESTS_NORMAL_USER_PASS";

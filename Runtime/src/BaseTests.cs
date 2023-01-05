@@ -46,7 +46,7 @@ namespace RGN.Tests
 
                 testEnvironment = new TestsEnvironment();
 
-                var setupEnvironmentTask = testEnvironment.SetupEnvironment(dependencies, modules);
+                var setupEnvironmentTask = testEnvironment.SetupEnvironmentAsync(dependencies, modules);
 
                 yield return setupEnvironmentTask.AsIEnumeratorReturnNull();
                 yield return LoginAsNormalTester();
@@ -59,11 +59,11 @@ namespace RGN.Tests
 
         protected IEnumerator LoginAsAdminTester()
         {
-            yield return testEnvironment.SetupTestAccount(true).AsIEnumeratorReturnNull();
+            yield return testEnvironment.SetupTestAccountAsync(true).AsIEnumeratorReturnNull();
         }
         protected IEnumerator LoginAsNormalTester()
         {
-            yield return testEnvironment.SetupTestAccount(false).AsIEnumeratorReturnNull();
+            yield return testEnvironment.SetupTestAccountAsync(false).AsIEnumeratorReturnNull();
         }
     }
 }
