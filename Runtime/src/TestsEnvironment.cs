@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using RGN.Dependencies;
-using RGN.Modules.EmailSignIn;
+using RGN.Modules.SignIn;
 
 namespace RGN.Tests
 {

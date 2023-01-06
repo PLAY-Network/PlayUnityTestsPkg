@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using RGN.Extensions;
-using RGN.Modules.EmailSignIn;
+using RGN.Modules.SignIn;
 using UnityEngine.TestTools;
 
 namespace RGN.Tests
