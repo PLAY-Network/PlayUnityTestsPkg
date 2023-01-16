@@ -26,7 +26,7 @@ namespace RGN.Tests
             await RGNCoreBuilder.BuildAsync(dependencies);
 
             TaskCompletionSource<bool> waitFirstAuthChange = new TaskCompletionSource<bool>();
-            RGNCoreBuilder.I.OnAuthenticationChanged += OnAuthenticationChanged;
+            RGNCoreBuilder.I.AuthenticationChanged += OnAuthenticationChanged;
 
 #pragma warning disable CS4014
             Task.Delay(5000).ContinueWith(task => {
@@ -36,7 +36,7 @@ namespace RGN.Tests
 
             await waitFirstAuthChange.Task;
 
-            RGNCoreBuilder.I.OnAuthenticationChanged -= OnAuthenticationChanged;
+            RGNCoreBuilder.I.AuthenticationChanged -= OnAuthenticationChanged;
 
             void OnAuthenticationChanged(EnumLoginState loginState, EnumLoginError error)
             {
@@ -60,7 +60,7 @@ namespace RGN.Tests
             TaskCompletionSource<bool> waitSignOut = new TaskCompletionSource<bool>();
             TaskCompletionSource<bool> waitSignIn = new TaskCompletionSource<bool>();
 
-            RGNCoreBuilder.I.OnAuthenticationChanged += OnAuthenticationChanged;
+            RGNCoreBuilder.I.AuthenticationChanged += OnAuthenticationChanged;
 
             if (RGNCoreBuilder.I.IsLoggedIn)
             {
@@ -71,7 +71,7 @@ namespace RGN.Tests
             RGNCoreBuilder.I.GetModule<EmailSignInModule>().OnSignInWithEmail(email, pass);
             await waitSignIn.Task;
 
-            RGNCoreBuilder.I.OnAuthenticationChanged -= OnAuthenticationChanged;
+            RGNCoreBuilder.I.AuthenticationChanged -= OnAuthenticationChanged;
 
             void OnAuthenticationChanged(EnumLoginState loginState, EnumLoginError error)
             {
