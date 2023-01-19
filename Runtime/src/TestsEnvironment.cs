@@ -64,11 +64,11 @@ namespace RGN.Tests
 
             if (RGNCoreBuilder.I.IsLoggedIn)
             {
-                RGNCoreBuilder.I.GetModule<EmailSignInModule>().SignOutFromEmail();
+                EmailSignInModule.I.SignOut();
                 await waitSignOut.Task;
             }
 
-            RGNCoreBuilder.I.GetModule<EmailSignInModule>().OnSignInWithEmail(email, pass);
+            EmailSignInModule.I.TryToSignIn(email, pass);
             await waitSignIn.Task;
 
             RGNCoreBuilder.I.AuthenticationChanged -= OnAuthenticationChanged;
