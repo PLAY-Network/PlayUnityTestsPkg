@@ -23,10 +23,11 @@ namespace RGN.Tests
                 RGNCoreBuilder.AddModule(module);
             }
 
-            await RGNCoreBuilder.BuildAsync(dependencies);
-
+            RGNCoreBuilder.CreateInstance(dependencies);
             TaskCompletionSource<bool> waitFirstAuthChange = new TaskCompletionSource<bool>();
             RGNCoreBuilder.I.AuthenticationChanged += OnAuthenticationChanged;
+            await RGNCoreBuilder.BuildAsync();
+
 
 #pragma warning disable CS4014
             Task.Delay(5000).ContinueWith(task => {
