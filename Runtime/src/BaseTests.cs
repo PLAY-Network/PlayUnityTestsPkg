@@ -30,10 +30,11 @@ namespace RGN.Tests
             yield return UnityOneTimeSetUp();
             yield return SetUp();
         }
+        
         [OneTimeTearDown]
         public void UnityTearDown()
         {
-            testEnvironment.Dispose();
+            testEnvironment?.Dispose();
             testEnvironment = null;
         }
 
